@@ -38,13 +38,14 @@ int main(int argc, char* argv[]) {
       printf("Received image, timestamp: %f \n", image.timestamp());
 
       // checking for dropped Imaging data
-      if ( last_imaging_frame_id.find(image.serial()) == last_imaging_frame_id.end()){
-        last_imaging_frame_id[image.serial()] = image.frame_id();
+      std::string serial = "a";
+      if ( last_imaging_frame_id.find(serial) == last_imaging_frame_id.end()){
+        last_imaging_frame_id[serial] = image.frame_id();
       } else {
-        if (image.frame_id() != last_imaging_frame_id[image.serial()]+1){
+        if (image.frame_id() != last_imaging_frame_id[serial]+1){
           printf("Imaging network DROP detected");
         }
-        last_imaging_frame_id[image.serial()] = image.frame_id();
+        last_imaging_frame_id[serial] = image.frame_id();
       }
     }
     error = rcv.NextTracker(tracker_state);
@@ -54,13 +55,14 @@ int main(int argc, char* argv[]) {
       printf("Received tracker_state, timestamp: %f \n",
              tracker_state.timestamp().common());
       // checking for dropped Tracking data
-      if ( last_tracking_frame_id.find(tracker_state.serial()) == last_tracking_frame_id.end()){
-        last_tracking_frame_id[tracker_state.serial()] = tracker_state.frame_id();
+      std::string serial = "b";
+      if ( last_tracking_frame_id.find(serial) == last_tracking_frame_id.end()){
+        last_tracking_frame_id[serial] = tracker_state.frame_id();
       } else {
-        if (tracker_state.frame_id() != last_tracking_frame_id[tracker_state.serial()]+1){
+        if (tracker_state.frame_id() != last_tracking_frame_id[serial]+1){
           printf("Tracking network DROP detected");
         }
-        last_tracking_frame_id[tracker_state.serial()] = tracker_state.frame_id();
+        last_tracking_frame_id[serial] = tracker_state.frame_id();
       }
 
     }
