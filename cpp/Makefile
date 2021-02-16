@@ -18,8 +18,8 @@ all: install example
 install: protocol
 
 debian:
-	dpkg -i ${ZENDAR_CORE_DEB}
-	dpkg -i ${ZENDAR_API_DEB}
+	# dpkg -i ${ZENDAR_CORE_DEB}
+	# dpkg -i ${ZENDAR_API_DEB}
 
 protocol: debian
 	${PROTOC} -I=${ZENDAR_PROTO_PATH} --cpp_out=${ZENDAR_PROTO_PATH} ${ZENDAR_PROTO_PATH}/*.proto
@@ -29,10 +29,10 @@ protocol: debian
 example: example-simple example-receiver
 
 example-simple: example-simple.cc
-	${CXX} $< -I${ZENDAR_INSTALL_PATH} ${LIBPATH} ${LINKFLAGS} -o $@
+	${CXX} -O0 -g $< -I${ZENDAR_INSTALL_PATH} ${LIBPATH} ${LINKFLAGS} -o $@
 
 example-receiver: example-receiver.cc
-	${CXX} $< -I${ZENDAR_INSTALL_PATH} ${LIBPATH} ${LINKFLAGS} -o $@
+	${CXX} -O0 -g $< -I${ZENDAR_INSTALL_PATH} ${LIBPATH} ${LINKFLAGS} -o $@
 
 clean:
 	rm -f example
