@@ -23,6 +23,7 @@ message Image {
   required Vec3d            position    = 3;
   optional uint64           frame_id    = 4;
   optional ImagePerformance performance = 5;
+  optional string           serial      = 6;  
 
   oneof image_model {
     ImageCartesian cartesian = 10;
@@ -91,6 +92,7 @@ message TrackerState {
   required TimeRecord  timestamp = 1;
   repeated Point       detection = 2;
   optional uint64      frame_id  = 3;
+  optional string      serial    = 4;  
 }
 
 // A point marks where the target is being detected
