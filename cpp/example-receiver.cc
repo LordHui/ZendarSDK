@@ -38,7 +38,7 @@ int main(int argc, char* argv[]) {
       printf("Received image, timestamp: %f \n", image.timestamp());
 
       // checking for dropped Imaging data
-      std::string serial = "a";
+      std::string serial = image.serial();
       if ( last_imaging_frame_id.find(serial) == last_imaging_frame_id.end()){
         last_imaging_frame_id[serial] = image.frame_id();
       } else {
@@ -55,7 +55,7 @@ int main(int argc, char* argv[]) {
       printf("Received tracker_state, timestamp: %f \n",
              tracker_state.timestamp().common());
       // checking for dropped Tracking data
-      std::string serial = "b";
+      std::string serial = tracker_state.serial();
       if ( last_tracking_frame_id.find(serial) == last_tracking_frame_id.end()){
         last_tracking_frame_id[serial] = tracker_state.frame_id();
       } else {
