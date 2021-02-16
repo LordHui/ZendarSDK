@@ -28,8 +28,8 @@ int main(int argc, char* argv[]) {
   zen_proto::data::Position position;
   zen_proto::data::LogRecord log;
 
-  std::unordered_map<std::string, std::uint64_t> last_imaging_frame_id;
-  std::unordered_map<std::string, std::uint64_t> last_tracking_frame_id;
+  std::unordered_map<std::string, int> last_imaging_frame_id;
+  std::unordered_map<std::string, int> last_tracking_frame_id;
   while (true) {
     error = rcv.NextImage(image);
     if (error) {
@@ -43,9 +43,10 @@ int main(int argc, char* argv[]) {
         last_imaging_frame_id[serial] = image.frame_id();
       } else {
         if (image.frame_id() != last_imaging_frame_id[serial]+1){
-          printf("Imaging network DROP detected");
+          printf("Imaging network DROP detected; last ID: %i \n",
+                 last_imaging_frame_id[serial]);
         }
-        last_imaging_frame_id[serial] = image.frame_id();
+        last_imaging_frame_id[serial] = static_cast<int>(image.frame_id());
       }
     }
     error = rcv.NextTracker(tracker_state);
@@ -60,9 +61,10 @@ int main(int argc, char* argv[]) {
         last_tracking_frame_id[serial] = tracker_state.frame_id();
       } else {
         if (tracker_state.frame_id() != last_tracking_frame_id[serial]+1){
-          printf("Tracking network DROP detected");
+          printf("Tracking DROP detected; last ID: %i \n",
+                 last_tracking_frame_id[serial]);
         }
-        last_tracking_frame_id[serial] = tracker_state.frame_id();
+        last_tracking_frame_id[serial] = static_cast<int>(tracker_state.frame_id());
       }
 
     }
