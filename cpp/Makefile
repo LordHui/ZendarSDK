@@ -18,8 +18,8 @@ all: install example
 install: protocol
 
 debian:
-	# dpkg -i ${ZENDAR_CORE_DEB}
-	# dpkg -i ${ZENDAR_API_DEB}
+	dpkg -i ${ZENDAR_CORE_DEB}
+	dpkg -i ${ZENDAR_API_DEB}
 
 protocol: debian
 	${PROTOC} -I=${ZENDAR_PROTO_PATH} --cpp_out=${ZENDAR_PROTO_PATH} ${ZENDAR_PROTO_PATH}/*.proto
